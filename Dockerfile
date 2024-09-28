@@ -12,7 +12,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
-RUn python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
 # Expose port 8000 to allow traffic to the application
 EXPOSE 8000
