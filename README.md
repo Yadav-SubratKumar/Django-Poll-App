@@ -17,4 +17,4 @@ Open your browser and type `http://localhost:8000`
 
 ### Check container logs
 
-`docker logs poll-me'
+`docker logs poll-me`
