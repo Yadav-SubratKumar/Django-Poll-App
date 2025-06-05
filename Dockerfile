@@ -1,21 +1,22 @@
-# Use the official Python image from Docker Hub as the base image
+# Using a Light weight image for the django application
 FROM python:3.11-slim
 
+# Setting up the working directory
 WORKDIR /app
 
+# Env varaible to prevent creation of bytecode 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-COPY ./requirements.txt .
-
+# Copying all files and installation of requirements.txt
+COPY . .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY . .
+# Command to migrate the database (sqlite)
+RUN python manage.py migrate
 
-RUN python manage.py collectstatic --noinput
-
-# Expose port 8000 to allow traffic to the application
+# Port exposion to allow the connection from the internet
 EXPOSE 8000
 
-# Define the command to run the application
-CMD ["gunicorn", "portfolio.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Command to run the django appplication using Gunicorn
+CMD ["gunicorn", "pollme.wsgi:application", "--bind", "0.0.0.0:8000"]
